@@ -5,10 +5,22 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
+  useLoaderData
 } from "react-router"
 
 import type { Route } from "./+types/root"
 import "./app.css"
+import { Sidebar, SidebarProvider, SidebarTrigger } from "./components/ui/sidebar"
+import { AppSidebar } from "./components/app-sidebar"
+import React from "react"
+
+export function loader({ request }: Route.LoaderArgs) {
+  const cookieHeader = request.headers.get("Cookie") || "";
+
+  const isclosed = cookieHeader.includes("sidebar:state=false");
+
+  return { defaultOpen: !isclosed };
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -20,7 +32,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        {children}  
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -29,7 +41,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />
+  const { defaultOpen } = useLoaderData<typeof loader>();
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <main className="flex-1 w-full bg-white relative">
+         <div className="p-4 border-b border-gray-200 flex items-center">
+            <SidebarTrigger />
+          <h1 className="text-lg font-bold ml-4">Energy Data App</h1>
+         </div> 
+         <div className="p-4">
+           <Outlet />
+         </div>
+      </main>
+    </SidebarProvider>
+  )
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
