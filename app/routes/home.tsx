@@ -62,13 +62,11 @@ export default function Home() {
     const [mounted, setMounted] = useState(false)
     const [newIds, setNewIds] = useState<Set<string>>(new Set())
 
-    // Trace IDs we have already shown, so only genuinely new anomalies flash.
+    // Trace IDs we have already shown, so only new anomalies flash.
     const seenRef = useRef<Set<string>>(
         new Set(initial.detections.map((detection) => detection.trace_id)),
     )
 
-    // Recharts is client-only; render it only after mount to avoid an SSR
-    // hydration mismatch.
     useEffect(() => setMounted(true), [])
 
     useEffect(() => {
