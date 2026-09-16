@@ -1,6 +1,8 @@
 import { Server, type TraceEventOut } from "../lib/server";
 import { useLoaderData } from "react-router";
 import type { Route } from "./+types/trace-detail";
+import DataTable from "~/components/ui/data-table";
+import { traceColumns } from "~/components/ui/dt-trace-columns";
 
 export async function loader({ params }: Route.LoaderArgs): Promise<TraceEventOut[]> {
     try {
@@ -20,33 +22,7 @@ export default function TraceDetail() {
         <div>
             <h1 className="font-bold">Trace Chain</h1>
             <p></p>
-            {events.length === 0 ? (
-                <p>No trace events found for this reading.</p>
-            ) : (
-                <ol>
-                    {events.map((e, i) => (
-                        <li key={i}>
-                            <p className="font-bold text-xl capitalize">{e.stage}</p>
-                            <p>Status: {e.status}</p>
-                            {e.stage === 'validation_failed' ? (
-                                <p>Data failed passing from sensor to system.</p>
-                            ) : ( null )}
-                            <div>
-                                
-                                <p>Timestamp: {e.created_at} </p>
-                                <p>Source: {e.source ? `${e.source}` : ""}</p>
-                                <p>Details:
-                                {e.details && Object.entries(e.details).map(([key, value]) =>(
-                                    <p key={key} className="capitalize">
-                                        {key} : {typeof value === 'object' ? JSON.stringify(value) : String(value)}
-                                    </p>
-                                ))}
-                                </p>
-                            </div>
-                        </li>
-                    ))}
-                </ol>
-            )}
+            <DataTable columns={traceColumns} data={events} />
         </div>
     );
 }

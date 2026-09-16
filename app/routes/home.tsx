@@ -7,10 +7,10 @@ import {
     type MetricKey,
 } from "~/components/live-generation-chart"
 
-const METRICS: { key: MetricKey; label: string; color: string }[] = [
-    { key: "GB_GBN_solar_generation_actual", label: "Solar generation (MW)", color: "#f59e0b" },
-    { key: "GB_GBN_solar_capacity", label: "Solar capacity (MW)", color: "#f97316" },
-    { key: "GB_GBN_solar_profile", label: "Solar profile (MW)", color: "#10b981" },
+const METRICS: { key: MetricKey; label: string; }[] = [
+    { key: "GB_GBN_solar_generation_actual", label: "Solar generation (MW)"},
+    { key: "GB_GBN_solar_capacity", label: "Solar capacity (MW)"},
+    { key: "GB_GBN_solar_profile", label: "Solar profile (MW)"},
 
 ]
 
@@ -238,7 +238,7 @@ export default function Home() {
                     )}
                 </div>
             </div>
-                        {/* Controls */}
+            {/* Controls */}
             <div className="w-72 shrink-0">
                 <div className="flex flex-col gap-5 border-2 border-gray-200 p-4 text-sm">
                     <h2 className="font-semibold">Filters</h2>

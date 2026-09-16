@@ -24,8 +24,6 @@ type LiveGenerationChartProps = {
     metricKey: MetricKey
     metricLabel: string
     color: string
-    // Epoch milliseconds of readings that have been flagged anomalous. Used to
-    // drop a red marker on the matching point of the line.
     anomalyTimestamps: Set<number>
 }
 

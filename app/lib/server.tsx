@@ -54,9 +54,6 @@ export class Server {
         }
     }
 
-    // Returns the most recent `limit` generation readings, ordered oldest to
-    // newest for charting. Sorts and slices client-side so it works whether or
-    // not the backend honours the limit/order query params.
     async getRecentGeneration(limit = 200): Promise<GenerationData[]> {
         try {
             const response = await fetch(`${this.baseURL}/api/v1/react/generation?limit=${limit}&order=desc`);
